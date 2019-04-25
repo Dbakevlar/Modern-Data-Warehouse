@@ -9,23 +9,13 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
 ```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
+These script support the automation of deployment for the Modern Data Warehouse.
+It removes the infrastructure steps for the data analyst or data scientist so they can work with the essential business of data
+vs. the Azure resources behind it.
+The scripts are interactive and dynamically fill in the requirements, removing the need to build out everything in the portal.
 
+A log file is generated in the end with the name of the resoruces, passwords, etc.
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
 ### Jekyll Themes
