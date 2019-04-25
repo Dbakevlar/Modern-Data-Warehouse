@@ -2,8 +2,7 @@
 set -euo pipefail
 #set -eux pipefail
 IFS=$'\n\t'
-# Set Job Run name here for logging:
-#export jobrun=mdw_deploy
+
 #---------------------------------------------------------------
 # mdw_deploy.sh
 # Author: Kellyn Gorman
@@ -132,7 +131,7 @@ fi
 
 echo "getting IP Address for Azure Cloud Shell for firewall rule"
 export subscriptionID=$(az account show | grep id |awk  '{print $2}'| tr -d \"\,)
-export servername="mdw"$holname"sql1"
+export servername="db"$holname"sql1"
 export adfname="adf"$holname
 export aasname=$holname"aas1"
 export spassword=$password"!"
@@ -146,6 +145,8 @@ export vnet=$servername"_vnet"l
 export snet=$vnet"_snet"
 export cap=$(cat wh.lst | grep $brcksize" " | awk '{print $4}' | tr -d \"\,)
 
+# Configure Defaults in case something doesn't get set
+az configure --defaults group=$groupname location=$zone
 # Update the JSON files with the correct resource names and zones.
 
 cat >./$parametersFile1 <<EOF
@@ -273,18 +274,18 @@ az sql db create \
     --capacity $cap \
     --zone-redundant false
 
-# Create Databricks 
-virtualenv -p /usr/bin/python2.7 bricks-cli
+# Install Databricks CLI once DB is part of cli install, will be enhancement
+# virtualenv -p /usr/bin/python2.7 $(holname)bricks-cli
 
-source bricks-cli/bin/activate
+# source $(holname)bricks-cli/bin/activate
 
-pip install databricks-cli
+# pip install databricks-cli
 
 # Enhancement-  find a way to dynamically populate the values for both prompts.
-echo "You will now be prompted for two values to enter-"
-echo "the name of databricks host- naming example for yours would be https://$zone.azuredatabricks.net"
-echo "name your token a security password that you will remember."
-databricks configure --token 
+# echo "You will now be prompted for two values to enter-"
+# echo "the name of databricks host- naming example for yours would be https://$zone.azuredatabricks.net"
+# echo "name your token a security password that you will remember."
+# databricks configure --token 
 
 
 # Install the Azure DevOps Extension to be used with deployment of Azure DevOps ADF Pipelines
