@@ -346,15 +346,15 @@ fi
 # Part III- Log all information from the deployment to the log file
 echo "This is your SQL Server, Admin User and Password:" > $logfile
 echo $servername $adminlogin $spassword >> $logfile
-echo "This is your ADF, Analysis Server and the Proxy Password for the AAS:"
-echo $adfname $aasname $password
+echo "This is your ADF, Analysis Server and the Proxy Password for the AAS:" >> $logfile
+echo $adfname $aasname $password >> $logfile
 echo "This is your Azure location zone:" $zone >> $logfile
 echo "This is the subscription deployed to and the Firewall IP:" >> $logfile 
 echo $subscriptionID $myip >> $logfile
-#echo "This is your databricks cluster info:"
+#echo "This is your databricks cluster info:" >> $logfile
 #echo databricks clusters list >> $logfile
 echo "------------------------------------------------------------------------------------------------------------"
 # Check for data and push to output file
-sqlcmd -U $adminlogin -S "${servername}.database.windows.net" -P "$spassword" -d HiEd_Staging -i "ck_views.sql" > $logfile
+sqlcmd -U $adminlogin -S "${servername}.database.windows.net" -P "$spassword" -d HiEd_Staging -i "ck_views.sql" >> $logfile
 
 echo "All Steps in the deployment are now complete."
